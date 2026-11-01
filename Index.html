@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The South Head Berry</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            black: '#0a0c0a',
+                            darkest: '#050c07',
+                            deep: '#0e2417',
+                            forest: '#1b432c',
+                            emerald: '#2e7d32',
+                            accent: '#4cae4f',
+                            light: '#a3e635',
+                            text: '#e2f1e7'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Cinzel', 'Playfair Display', 'Georgia', 'serif'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0a0c0a;
+            color: #e2f1e7;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Ambient background glow & radial gradient effects */
+        .ambient-glow {
+            background: radial-gradient(circle at 50% 40%, rgba(27, 67, 44, 0.35) 0%, rgba(14, 36, 23, 0.2) 45%, rgba(10, 12, 10, 0.95) 100%);
+        }
+
+        .hero-border {
+            border: 1px solid rgba(46, 125, 50, 0.25);
+            box-shadow: 0 0 35px -5px rgba(15, 46, 27, 0.5), inset 0 0 25px rgba(27, 67, 44, 0.2);
+        }
+
+        /* Custom glow animations */
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+
+        .pulse-bg {
+            animation: pulseGlow 8s infinite ease-in-out;
+        }
+
+        /* Metallic / Glowing Text Effect */
+        .text-glow {
+            text-shadow: 0 0 20px rgba(76, 174, 79, 0.3), 0 0 40px rgba(27, 67, 44, 0.4);
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col justify-between overflow-x-hidden antialiased selection:bg-brand-emerald selection:text-white">
+
+    <!-- Background Layer with Subtle Organic/Botanical Geometry -->
+    <div class="fixed inset-0 pointer-events-none z-0 ambient-glow"></div>
+    <div class="fixed inset-0 pointer-events-none z-0 opacity-15 pulse-bg bg-[radial-gradient(#2e7d32_1px,transparent_1px)] [background-size:32px_32px]"></div>
+
+    <!-- Main Container -->
+    <main class="relative z-10 flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+        <div class="max-w-4xl w-full mx-auto text-center hero-border rounded-3xl p-8 sm:p-12 lg:p-16 bg-gradient-to-b from-[#0e2417]/40 via-[#0a0c0a]/90 to-[#050c07]/95 backdrop-blur-md transition-all duration-500 hover:border-brand-emerald/40">
+            
+            <!-- Image Emblem / Crest -->
+            <div class="mb-8 flex justify-center">
+                <div class="relative flex items-center justify-center w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-brand-deep/60 border border-brand-emerald/40 shadow-lg shadow-brand-darkest group overflow-hidden p-2">
+                    <div class="absolute inset-0 rounded-full bg-brand-accent/10 filter blur-md group-hover:bg-brand-accent/25 transition-all"></div>
+                    <!-- Source Image -->
+                    <img 
+                        src="images/IMG_5499.PNG" 
+                        alt="The South Head Berry Icon" 
+                        class="w-full h-full object-cover rounded-full relative z-10 transition-transform duration-500 group-hover:scale-105"
+                        onerror="this.onerror=null; this.src='https://placehold.co/200x200/0e2417/4cae4f?text=IMG_5499';"
+                    />
+                </div>
+            </div>
+
+            <!-- Header Title -->
+            <h1 class="font-serif text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-emerald-100 via-brand-text to-emerald-300 mb-6 text-glow">
+                The South Head Berry
+            </h1>
+
+            <!-- Decorative Divider -->
+            <div class="flex items-center justify-center space-x-4 mb-8">
+                <div class="h-[1px] w-12 sm:w-20 bg-gradient-to-r from-transparent to-brand-emerald/60"></div>
+                <div class="w-2 h-2 rounded-full bg-brand-accent shadow-[0_0_8px_#4cae4f]"></div>
+                <div class="h-[1px] w-12 sm:w-20 bg-gradient-to-l from-transparent to-brand-emerald/60"></div>
+            </div>
+
+            <!-- Single Sentence Description (530 characters) -->
+            <p class="text-base sm:text-lg lg:text-xl text-emerald-100/90 leading-relaxed sm:leading-loose font-normal max-w-3xl mx-auto tracking-wide text-justify sm:text-center">
+                Rooted in the sacred sovereignty of our ancestral lands, The South Head Berry stands as a beacon of self-reliance, living sustainably within our own means while honoring the deep native values of truth, resilience, and harmony with the Earth; bound by an unwavering strength for the Almighty Lord and dedicated to nurturing our people through timeless traditions, we cultivate the soil with honor, defend what truly holds sacred value, and walk forward in quiet power as a testament to sovereign faith, enduring freedom, and the eternal gifts of the Creator.
+            </p>
+
+            <!-- Bottom Call To Action: X (Twitter) Follow Button -->
+            <div class="mt-10 sm:mt-12 flex justify-center">
+                <a href="https://x.com" target="_blank" rel="noopener noreferrer" 
+                   class="group relative inline-flex items-center justify-center px-8 py-4 text-sm font-semibold tracking-wider text-white transition-all duration-300 ease-out bg-brand-deep border border-brand-emerald/50 rounded-full shadow-lg overflow-hidden hover:border-brand-accent hover:shadow-[0_0_25px_rgba(76,174,79,0.4)] active:scale-95">
+                    <!-- Glow Overlay on Hover -->
+                    <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-brand-forest via-brand-emerald to-brand-forest opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></span>
+                    
+                    <!-- Content -->
+                    <span class="relative z-10 flex items-center space-x-3">
+                        <!-- X SVG Icon -->
+                        <svg class="w-4 h-4 fill-current text-emerald-200 group-hover:text-white transition-colors" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                        <span class="text-emerald-100 group-hover:text-white font-medium">Follow on X</span>
+                    </span>
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 py-6 text-center text-xs text-brand-emerald/60 tracking-widest font-serif uppercase">
+        &copy; The South Head Berry &bull; Sovereign & Grounded
+    </footer>
+
+</body>
+</html>
