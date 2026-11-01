@@ -4,27 +4,37 @@
     <meta charset="UTF-8">
     <title>Update TRON SR URL</title>
 </head>
-<body style="font-family: sans-serif; padding: 30px;">
+<body style="font-family: sans-serif; padding: 30px; max-width: 600px;">
     <h2>Update SR Candidate Website URL</h2>
-    <p>Connected Address: <b id="wallet-address">Connecting...</b></p>
+    <p>Candidate Address: <b>TWKFjPakHP54EAXTMifbKA77RT3g8cyZoQ</b></p>
+    <p>Connected Active Key: <b id="active-key">Loading...</b></p>
     
-    <label for="newUrl">New Website URL:</label><br>
-    <input type="text" id="newUrl" placeholder="https://yourdomain.com" style="width: 300px; padding: 8px; margin-top: 5px;"><br><br>
+    <label for="newUrl"><b>New Website URL:</b></label><br>
+    <input type="text" id="newUrl" value="https://freeberrycash.xyz" style="width: 100%; padding: 8px; margin: 8px 0;"><br><br>
+
+    <label for="permId"><b>Permission ID (Leave blank if using main Owner Key):</b></label><br>
+    <input type="number" id="permId" placeholder="e.g. 2" style="width: 100px; padding: 8px; margin: 8px 0;"><br><br>
     
-    <button id="updateBtn" onclick="updateUrl()" style="padding: 10px 20px; cursor: pointer;">Update On-Chain</button>
-    <p id="status"></p>
+    <button onclick="updateUrl()" style="padding: 10px 20px; font-weight: bold; cursor: pointer;">Update On-Chain</button>
+    
+    <p id="status" style="margin-top: 20px; font-weight: bold;"></p>
 
     <script>
+        const CANDIDATE_ADDRESS = "TWKFjPakHP54EAXTMifbKA77RT3g8cyZoQ";
+
         window.addEventListener('load', async () => {
-            if (window.tronWeb && window.tronWeb.ready) {
-                document.getElementById('wallet-address').innerText = window.tronWeb.defaultAddress.base58;
-            } else {
-                document.getElementById('status').innerText = "Please unlock TronLink and refresh.";
-            }
+            setTimeout(() => {
+                if (window.tronWeb && window.tronWeb.ready) {
+                    document.getElementById('active-key').innerText = window.tronWeb.defaultAddress.base58;
+                } else {
+                    document.getElementById('active-key').innerText = "TronLink not detected or locked.";
+                }
+            }, 500);
         });
 
         async function updateUrl() {
             const newUrl = document.getElementById('newUrl').value.trim();
+            const permIdInput = document.getElementById('permId').value.trim();
             const status = document.getElementById('status');
             
             if (!newUrl) {
@@ -34,22 +44,33 @@
 
             try {
                 status.innerText = "Building transaction...";
-                // Build witness update transaction using connected TronLink
+                
+                // Set options if a permissionId is entered
+                let options = {};
+                if (permIdInput !== "") {
+                    options.permissionId = parseInt(permIdInput, 10);
+                }
+
+                // Explicitly pass the candidate Base58 address
                 const tx = await window.tronWeb.transactionBuilder.updateWitness(
-                    window.tronWeb.defaultAddress.hex,
-                    newUrl
+                    CANDIDATE_ADDRESS,
+                    newUrl,
+                    options
                 );
                 
-                status.innerText = "Please confirm the transaction in TronLink pop-up...";
+                status.innerText = "Please confirm the transaction in TronLink...";
                 const signedTx = await window.tronWeb.trx.sign(tx);
                 const broadcast = await window.tronWeb.trx.sendRawTransaction(signedTx);
                 
                 if (broadcast.result) {
+                    status.style.color = "green";
                     status.innerText = "Success! Transaction ID: " + broadcast.txid;
                 } else {
+                    status.style.color = "red";
                     status.innerText = "Broadcast Failed: " + JSON.stringify(broadcast);
                 }
             } catch (err) {
+                status.style.color = "red";
                 status.innerText = "Error: " + (err.message || err);
             }
         }
