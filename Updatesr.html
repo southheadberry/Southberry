@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update TRON SR URL</title>
+</head>
+<body style="font-family: sans-serif; padding: 30px;">
+    <h2>Update SR Candidate Website URL</h2>
+    <p>Connected Address: <b id="wallet-address">Connecting...</b></p>
+    
+    <label for="newUrl">New Website URL:</label><br>
+    <input type="text" id="newUrl" placeholder="https://yourdomain.com" style="width: 300px; padding: 8px; margin-top: 5px;"><br><br>
+    
+    <button id="updateBtn" onclick="updateUrl()" style="padding: 10px 20px; cursor: pointer;">Update On-Chain</button>
+    <p id="status"></p>
+
+    <script>
+        window.addEventListener('load', async () => {
+            if (window.tronWeb && window.tronWeb.ready) {
+                document.getElementById('wallet-address').innerText = window.tronWeb.defaultAddress.base58;
+            } else {
+                document.getElementById('status').innerText = "Please unlock TronLink and refresh.";
+            }
+        });
+
+        async function updateUrl() {
+            const newUrl = document.getElementById('newUrl').value.trim();
+            const status = document.getElementById('status');
+            
+            if (!newUrl) {
+                status.innerText = "Please enter a valid URL.";
+                return;
+            }
+
+            try {
+                status.innerText = "Building transaction...";
+                // Build witness update transaction using connected TronLink
+                const tx = await window.tronWeb.transactionBuilder.updateWitness(
+                    window.tronWeb.defaultAddress.hex,
+                    newUrl
+                );
+                
+                status.innerText = "Please confirm the transaction in TronLink pop-up...";
+                const signedTx = await window.tronWeb.trx.sign(tx);
+                const broadcast = await window.tronWeb.trx.sendRawTransaction(signedTx);
+                
+                if (broadcast.result) {
+                    status.innerText = "Success! Transaction ID: " + broadcast.txid;
+                } else {
+                    status.innerText = "Broadcast Failed: " + JSON.stringify(broadcast);
+                }
+            } catch (err) {
+                status.innerText = "Error: " + (err.message || err);
+            }
+        }
+    </script>
+</body>
+</html>
